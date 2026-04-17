@@ -4,6 +4,8 @@ import {
   HardHat,
   Briefcase,
   Search,
+  Bell,
+  HelpCircle,
   Download,
   TrendingUp,
   HandCoins,
