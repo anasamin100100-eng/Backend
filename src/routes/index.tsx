@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Wrench, MapPin, Eye, EyeOff, Shield } from "lucide-react";
 
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/")({
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <main className="min-h-screen grid lg:grid-cols-2 bg-background">
@@ -88,7 +89,10 @@ function LoginPage() {
 
           <form
             className="mt-10 space-y-6"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={(e) => {
+              e.preventDefault();
+              navigate({ to: "/dashboard" });
+            }}
           >
             <div className="space-y-2">
               <label
