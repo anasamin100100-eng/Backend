@@ -1,19 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
-  LayoutGrid,
-  BarChart3,
-  Users,
-  HardHat,
   UserRound,
+  HardHat,
   Briefcase,
-  Activity,
-  ClipboardList,
-  CreditCard,
-  LineChart,
-  Wallet,
-  Wrench,
-  Star,
-  Settings,
   Search,
   Bell,
   HelpCircle,
@@ -23,6 +12,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import {
   BarChart,
   Bar,
@@ -44,22 +34,6 @@ export const Route = createFileRoute("/dashboard")({
     ],
   }),
 });
-
-const navItems = [
-  { label: "Dashboard", icon: LayoutGrid, active: true },
-  { label: "Analytics", icon: BarChart3 },
-  { label: "All Users", icon: Users },
-  { label: "Workers", icon: HardHat },
-  { label: "Clients", icon: UserRound },
-  { label: "All Jobs", icon: Briefcase },
-  { label: "Active Jobs", icon: Activity },
-  { label: "Job Requests", icon: ClipboardList },
-  { label: "Payments", icon: CreditCard },
-  { label: "Earnings Reports", icon: LineChart },
-  { label: "Withdrawals", icon: Wallet },
-  { label: "Services", icon: Wrench },
-  { label: "Reviews", icon: Star },
-];
 
 const stats = [
   {
@@ -151,48 +125,7 @@ const jobRequests = [
 function DashboardPage() {
   return (
     <div className="min-h-screen bg-surface-muted flex">
-      {/* Sidebar */}
-      <aside className="hidden lg:flex w-64 shrink-0 flex-col bg-background border-r border-border">
-        <div className="px-6 py-6">
-          <Link to="/" className="block">
-            <h1 className="text-2xl font-bold text-brand tracking-tight">
-              UstadGo
-            </h1>
-            <p className="text-[10px] font-semibold tracking-[0.2em] text-muted-foreground mt-0.5">
-              ADMIN PORTAL
-            </p>
-          </Link>
-        </div>
-
-        <nav className="flex-1 px-3 py-2 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.label}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  item.active
-                    ? "bg-brand/10 text-brand"
-                    : "text-foreground/70 hover:bg-surface-muted hover:text-foreground"
-                }`}
-              >
-                <Icon className="size-5 shrink-0" />
-                <span>{item.label}</span>
-                {item.active && (
-                  <span className="ml-auto h-6 w-1 rounded-full bg-brand" />
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="px-3 py-4 border-t border-border">
-          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-foreground/70 hover:bg-surface-muted hover:text-foreground transition-colors">
-            <Settings className="size-5" />
-            <span>Settings</span>
-          </button>
-        </div>
-      </aside>
+      <AdminSidebar active="Dashboard" />
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
