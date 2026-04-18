@@ -13,6 +13,7 @@ import { Route as WorkersRouteImport } from './routes/workers'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ClientsRouteImport } from './routes/clients'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as ActiveJobsRouteImport } from './routes/active-jobs'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const ClientsRoute = ClientsRouteImport.update({
   path: '/clients',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActiveJobsRoute = ActiveJobsRouteImport.update({
   id: '/active-jobs',
   path: '/active-jobs',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/active-jobs': typeof ActiveJobsRoute
+  '/analytics': typeof AnalyticsRoute
   '/clients': typeof ClientsRoute
   '/dashboard': typeof DashboardRoute
   '/reviews': typeof ReviewsRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/active-jobs': typeof ActiveJobsRoute
+  '/analytics': typeof AnalyticsRoute
   '/clients': typeof ClientsRoute
   '/dashboard': typeof DashboardRoute
   '/reviews': typeof ReviewsRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/active-jobs': typeof ActiveJobsRoute
+  '/analytics': typeof AnalyticsRoute
   '/clients': typeof ClientsRoute
   '/dashboard': typeof DashboardRoute
   '/reviews': typeof ReviewsRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/active-jobs'
+    | '/analytics'
     | '/clients'
     | '/dashboard'
     | '/reviews'
     | '/workers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/active-jobs' | '/clients' | '/dashboard' | '/reviews' | '/workers'
+  to:
+    | '/'
+    | '/active-jobs'
+    | '/analytics'
+    | '/clients'
+    | '/dashboard'
+    | '/reviews'
+    | '/workers'
   id:
     | '__root__'
     | '/'
     | '/active-jobs'
+    | '/analytics'
     | '/clients'
     | '/dashboard'
     | '/reviews'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActiveJobsRoute: typeof ActiveJobsRoute
+  AnalyticsRoute: typeof AnalyticsRoute
   ClientsRoute: typeof ClientsRoute
   DashboardRoute: typeof DashboardRoute
   ReviewsRoute: typeof ReviewsRoute
@@ -132,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/active-jobs': {
       id: '/active-jobs'
       path: '/active-jobs'
@@ -152,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActiveJobsRoute: ActiveJobsRoute,
+  AnalyticsRoute: AnalyticsRoute,
   ClientsRoute: ClientsRoute,
   DashboardRoute: DashboardRoute,
   ReviewsRoute: ReviewsRoute,
@@ -160,3 +187,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
