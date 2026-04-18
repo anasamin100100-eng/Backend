@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkersRouteImport } from './routes/workers'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -21,6 +22,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const WorkersRoute = WorkersRouteImport.update({
   id: '/workers',
   path: '/workers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/reviews': typeof ReviewsRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/workers': typeof WorkersRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/reviews': typeof ReviewsRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/workers': typeof WorkersRoute
 }
 export interface FileRoutesById {
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/reviews': typeof ReviewsRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/workers': typeof WorkersRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/reviews'
     | '/services'
+    | '/settings'
     | '/workers'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/reviews'
     | '/services'
+    | '/settings'
     | '/workers'
   id:
     | '__root__'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/reviews'
     | '/services'
+    | '/settings'
     | '/workers'
   fileRoutesById: FileRoutesById
 }
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   ReviewsRoute: typeof ReviewsRoute
   ServicesRoute: typeof ServicesRoute
+  SettingsRoute: typeof SettingsRoute
   WorkersRoute: typeof WorkersRoute
 }
 
@@ -141,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/workers'
       fullPath: '/workers'
       preLoaderRoute: typeof WorkersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -203,8 +223,18 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   ReviewsRoute: ReviewsRoute,
   ServicesRoute: ServicesRoute,
+  SettingsRoute: SettingsRoute,
   WorkersRoute: WorkersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
