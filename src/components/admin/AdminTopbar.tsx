@@ -1,4 +1,5 @@
-import { Bell, HelpCircle } from "lucide-react";
+import { Bell, HelpCircle, LogOut } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 interface AdminTopbarProps {
   name?: string;
@@ -13,6 +14,12 @@ export function AdminTopbar({
   initials = "AK",
   children,
 }: AdminTopbarProps) {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    navigate({ to: "/" });
+  };
+
   return (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b border-border px-6 lg:px-10 py-4 flex items-center gap-4">
       <div className="flex-1">{children}</div>
@@ -35,6 +42,13 @@ export function AdminTopbar({
           {initials}
         </div>
       </div>
+      <button
+        onClick={handleSignOut}
+        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border text-sm font-semibold text-foreground/80 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive transition-colors"
+      >
+        <LogOut className="size-4" />
+        <span className="hidden sm:inline">Sign Out</span>
+      </button>
     </header>
   );
 }

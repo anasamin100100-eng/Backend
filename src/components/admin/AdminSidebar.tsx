@@ -21,15 +21,15 @@ const navItems = [
   { label: "Analytics", icon: BarChart3, to: "/dashboard" as const },
   { label: "All Users", icon: Users, to: "/dashboard" as const },
   { label: "Workers", icon: HardHat, to: "/workers" as const },
-  { label: "Clients", icon: UserRound, to: "/dashboard" as const },
+  { label: "Clients", icon: UserRound, to: "/clients" as const },
   { label: "All Jobs", icon: Briefcase, to: "/dashboard" as const },
-  { label: "Active Jobs", icon: Activity, to: "/dashboard" as const },
+  { label: "Active Jobs", icon: Activity, to: "/active-jobs" as const },
   { label: "Job Requests", icon: ClipboardList, to: "/dashboard" as const },
   { label: "Payments", icon: CreditCard, to: "/dashboard" as const },
   { label: "Earnings Reports", icon: LineChart, to: "/dashboard" as const },
   { label: "Withdrawals", icon: Wallet, to: "/dashboard" as const },
   { label: "Services", icon: Wrench, to: "/dashboard" as const },
-  { label: "Reviews", icon: Star, to: "/dashboard" as const },
+  { label: "Reviews", icon: Star, to: "/reviews" as const },
 ];
 
 interface AdminSidebarProps {
