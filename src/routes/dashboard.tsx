@@ -4,8 +4,6 @@ import {
   HardHat,
   Briefcase,
   Search,
-  Bell,
-  HelpCircle,
   Download,
   TrendingUp,
   HandCoins,
@@ -13,6 +11,7 @@ import {
   Minus,
 } from "lucide-react";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { AdminTopbar } from "@/components/admin/AdminTopbar";
 import {
   BarChart,
   Bar,
