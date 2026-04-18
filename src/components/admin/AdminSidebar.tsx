@@ -18,7 +18,7 @@ import {
 
 const navItems = [
   { label: "Dashboard", icon: LayoutGrid, to: "/dashboard" as const },
-  { label: "Analytics", icon: BarChart3, to: "/dashboard" as const },
+  { label: "Analytics", icon: BarChart3, to: "/analytics" as const },
   { label: "All Users", icon: Users, to: "/dashboard" as const },
   { label: "Workers", icon: HardHat, to: "/workers" as const },
   { label: "Clients", icon: UserRound, to: "/clients" as const },
@@ -28,7 +28,7 @@ const navItems = [
   { label: "Payments", icon: CreditCard, to: "/dashboard" as const },
   { label: "Earnings Reports", icon: LineChart, to: "/dashboard" as const },
   { label: "Withdrawals", icon: Wallet, to: "/dashboard" as const },
-  { label: "Services", icon: Wrench, to: "/dashboard" as const },
+  { label: "Services", icon: Wrench, to: "/services" as const },
   { label: "Reviews", icon: Star, to: "/reviews" as const },
 ];
 
