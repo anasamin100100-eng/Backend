@@ -75,10 +75,17 @@ export function AdminSidebar({ active }: AdminSidebarProps) {
       </nav>
 
       <div className="px-3 py-4 border-t border-border">
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-foreground/70 hover:bg-surface-muted hover:text-foreground transition-colors">
+        <Link
+          to="/settings"
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            active === "Settings"
+              ? "bg-brand/10 text-brand"
+              : "text-foreground/70 hover:bg-surface-muted hover:text-foreground"
+          }`}
+        >
           <Settings className="size-5" />
           <span>Settings</span>
-        </button>
+        </Link>
       </div>
     </aside>
   );
