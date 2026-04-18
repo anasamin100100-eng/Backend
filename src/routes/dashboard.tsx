@@ -128,9 +128,8 @@ function DashboardPage() {
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Topbar */}
-        <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b border-border px-6 lg:px-10 py-4 flex items-center gap-4">
-          <div className="flex-1 max-w-xl relative">
+        <AdminTopbar>
+          <div className="max-w-xl relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input
               type="search"
@@ -138,26 +137,7 @@ function DashboardPage() {
               className="w-full h-11 pl-11 pr-4 rounded-full bg-surface-muted border border-transparent text-sm focus:outline-none focus:border-brand focus:bg-background transition-all"
             />
           </div>
-          <button className="size-10 rounded-full hover:bg-surface-muted flex items-center justify-center text-foreground/70 transition-colors">
-            <Bell className="size-5" />
-          </button>
-          <button className="size-10 rounded-full hover:bg-surface-muted flex items-center justify-center text-foreground/70 transition-colors">
-            <HelpCircle className="size-5" />
-          </button>
-          <div className="flex items-center gap-3 pl-2">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-bold text-foreground leading-tight">
-                Ahmed Khan
-              </p>
-              <p className="text-[10px] tracking-widest text-muted-foreground">
-                SENIOR ADMINISTRATOR
-              </p>
-            </div>
-            <div className="size-10 rounded-full bg-gradient-to-br from-brand to-brand-light flex items-center justify-center text-brand-foreground font-bold text-sm">
-              AK
-            </div>
-          </div>
-        </header>
+        </AdminTopbar>
 
         <main className="flex-1 px-6 lg:px-10 py-8 space-y-8">
           {/* Header row */}
