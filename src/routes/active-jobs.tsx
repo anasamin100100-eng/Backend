@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+
 import {
   Plus,
   Minus,
@@ -44,46 +46,37 @@ interface Job {
   status: JobStatus;
 }
 
-const jobs: Job[] = [
-  {
-    id: "#JOB-8842",
-    service: "Electrical Repair",
-    icon: Zap,
-    area: "DHA Phase 6, Karachi",
-    worker: "Ahmed Khan",
-    initials: "AK",
-    lat: "24.8213°N",
-    lng: "67.0673°E",
-    eta: "08:42 mins",
-    status: "WORKER ON WAY",
-  },
-  {
-    id: "#JOB-8839",
-    service: "Pipe Maintenance",
-    icon: Wrench,
-    area: "Gulshan-e-Iqbal, Karachi",
-    worker: "Mohammad Raza",
-    initials: "MR",
-    lat: "24.9181°N",
-    lng: "67.0971°E",
-    eta: "Arrived",
-    status: "IN PROGRESS",
-  },
-  {
-    id: "#JOB-8845",
-    service: "AC Installation",
-    icon: Snowflake,
-    area: "Clifton Block 4, Karachi",
-    worker: "Saleem Khan",
-    initials: "SK",
-    lat: "24.8138°N",
-    lng: "67.0315°E",
-    eta: "14:15 mins",
-    status: "WORKER ON WAY",
-  },
-];
-
 function ActiveJobsPage() {
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/jobs")
+      .then(res => res.json())
+      .then(data => {
+        // map backend data → UI format
+        const formatted = data.map((job: any) => ({
+          id: job.id,
+          service: job.service,
+          icon:
+            job.service.toLowerCase().includes("electric")
+              ? Zap
+              : job.service.toLowerCase().includes("pipe")
+              ? Wrench
+              : Snowflake,
+          area: job.area,
+          worker: job.worker,
+          initials: job.initials,
+          lat: job.lat,
+          lng: job.lng,
+          eta: job.eta,
+          status: job.status,
+        }));
+
+        setJobs(formatted);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <div className="flex min-h-screen bg-surface-muted">
       <AdminSidebar active="Active Jobs" />

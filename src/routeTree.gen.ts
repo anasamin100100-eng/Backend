@@ -13,6 +13,7 @@ import { Route as WorkersRouteImport } from './routes/workers'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
@@ -37,6 +38,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/clients': typeof ClientsRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/reviews': typeof ReviewsRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/clients': typeof ClientsRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/reviews': typeof ReviewsRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/clients': typeof ClientsRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/reviews': typeof ReviewsRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/clients'
     | '/dashboard'
+    | '/login'
     | '/reviews'
     | '/services'
     | '/settings'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/clients'
     | '/dashboard'
+    | '/login'
     | '/reviews'
     | '/services'
     | '/settings'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/clients'
     | '/dashboard'
+    | '/login'
     | '/reviews'
     | '/services'
     | '/settings'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   ClientsRoute: typeof ClientsRoute
   DashboardRoute: typeof DashboardRoute
+  LoginRoute: typeof LoginRoute
   ReviewsRoute: typeof ReviewsRoute
   ServicesRoute: typeof ServicesRoute
   SettingsRoute: typeof SettingsRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/reviews'
       fullPath: '/reviews'
       preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   ClientsRoute: ClientsRoute,
   DashboardRoute: DashboardRoute,
+  LoginRoute: LoginRoute,
   ReviewsRoute: ReviewsRoute,
   ServicesRoute: ServicesRoute,
   SettingsRoute: SettingsRoute,
@@ -229,3 +250,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

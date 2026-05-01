@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
   UserRound,
   HardHat,
@@ -122,7 +123,18 @@ const jobRequests = [
 ];
 
 function DashboardPage() {
+  const [msg, setMsg] = useState("");
+
+useEffect(() => {
+  fetch("http://localhost:5000/api/test")
+    .then(res => res.json())
+    .then(data => setMsg(data.message));
+    <p className="text-green-600">{msg}</p>
+}, []);
+
+
   return (
+    
     <div className="min-h-screen bg-surface-muted flex">
       <AdminSidebar active="Dashboard" />
 
